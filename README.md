@@ -1,41 +1,57 @@
-# aws_ecs_deployment
+# AWS ECS with terraform
 aws_ecs_deployment with terraform
 
-This Repository is set of terraform modules to create ECS Cluster.
+Using this Repository we can create ECS Cluster using terraform.
 
 
-Here we have modules for all services which are needed for ECS Cluser.
+Here we use modules to create all AWS service so later while creating multiple environment we do not need to rewrite entire code it can be reused .
 
-List of Modules.
-1) ecs - for Creating ECS cluster, Service and task-definition
-2) iam - Used for creating IAM Roles for services to connect with other service.
-3) loadbalancer - Used for Creating Application loadbalancer (ALB).
-4) networking - This Modules create a VPC, Subnets(2 Private & 2 Public Subnets), Natgateway, Igw etc.
-5) security_group - This Module Create all Security groups i.e for ALB, ECS  
+# List of Modules.
+* ecs - User for Creating ECS cluster, Service and task-definition
+* iam - Used for creating IAM Roles for services to connect with other service.
+* loadbalancer - Used for Creating Application loadbalancer (ALB).
+* networking - Used for creating a VPC, Subnets(2 Private & 2 Public Subnets), Natgateway, Igw etc.
+* security_group - Used for Creating all Security groups (i.e) ALB, ECS  
 
-pre-requisites.
-1) Create a docker image and store it in ECR (Amazon Elastic Container Registry). Ensure you use same region where you are going to run ECS Cluster and update ARN in terraform variables.
-2) Since the access is over HTTPS its recommended to create a valid certificate. in this scenario i have used self-signed certificate and steps are given below
-          i) Upload self-signed certificate incase if you do not have certificate
-                    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt
-                    openssl rsa -in privateKey.key -text > private.pem
-                    openssl x509 -inform PEM -in certificate.crt > public.pem
-                    aws iam upload-server-certificate --server-certificate-name <certname> --certificate-body file://public.pem --private-key file://private.pem —region us-east-1
-          ii) Update this ARN In terraform.
+## Requirements
 
-using self-signed certificate has some drawbacks while accessing it over browser. using curl with -k option can help over come this issue.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.7 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.15.1 |
 
-Creating Infrastructure using Terraform.
-1) Clone this Repository
-    git clone <repo>
-2) login to the repo
-    cd aws_ecs_deployment
-3) Run Terraform init
-     terraform init  
-4) Run Terraform plan.
-    terraform plan
-5) Deploy Terraform
-    terraform apply (confirm with yes)
+## Providers
 
-Terraform will provide Load balance endpoint which can be used to access the deployed image.
-curl -x https://<ALB>/index.html             
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.15.1 |
+
+### Pre-requisites.
+1)  Create a docker image and store it in ECR (Amazon Elastic Container Registry). Ensure you use same region where you are going to run ECS Cluster and update ARN in terraform variables.
+
+2)  Access to endpoint is over HTTPS its recommended to create a valid certificate. in this scenario i have used self-signed certificate and steps are given below.
+#### Upload self-signed certificate incase if you do not have certificate
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt
+openssl rsa -in privateKey.key -text > private.pem
+openssl x509 -inform PEM -in certificate.crt > public.pem
+aws iam upload-server-certificate --server-certificate-name <certname> --certificate-body file://public.pem --private-key file://private.pem —region us-east-1
+```
+Update this ARN In terraform.
+
+Using self-signed certificate has some drawbacks while accessing it over browser. using curl with -k option can help over come this issue.
+
+## Creating Infrastructure using Terraform.
+ * Clone this Repository
+    ```git clone <repo>```
+ * login to the repo
+    ```cd aws_ecs_deployment```
+ * Run Terraform init
+    ```terraform init```  
+ * Run Terraform plan.
+   ```terraform plan```
+ * Deploy Terraform
+    ```terraform apply (confirm with yes)```
+
+Terraform will provide Load balance endpoint as output which can be used to access the deployed image.
+* curl -x https://<ALB>/index.html        
