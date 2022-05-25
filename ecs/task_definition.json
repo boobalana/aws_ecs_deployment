@@ -1,0 +1,10 @@
+[
+  {
+    "name": "${task_definition_name}",
+    "image": "${docker_image_url}",
+    "essential": true,
+    "portMappings": [{
+      "containerPort": ${docker_container_port}
+      }]
+  }
+]
