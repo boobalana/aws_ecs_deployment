@@ -46,11 +46,11 @@ backend.tf
 
 terraform {
   backend "s3" {
-    bucket         = "aws-ecs-terraform"
-    key            = "tfstate/aws-ecs-terraform/app.tfstate"
-    region         = "us-east-1"
+    bucket         = "<s3 bucketname>"
+    key            = "<path to store statefile>"
+    region         = "<Region>"
     encrypt        = true
-    dynamodb_table = "aws-ecs-terraform-locking-ue1"
+    dynamodb_table = "<dynamodb table>"
   }
 }
 ```
