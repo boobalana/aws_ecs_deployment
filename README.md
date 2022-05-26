@@ -39,7 +39,21 @@ aws iam upload-server-certificate --server-certificate-name <certname> --certifi
 Update this ARN In terraform.
 
 Using self-signed certificate has some drawbacks while accessing it over browser. using curl with -k option can help over come this issue.
+### Terraform statefile.
+i am not using remote state. here all state files are stored locally. enabling remote state can be done by adding the file given below  backend.tf this will enable remote state. 
+```
+backend.tf
 
+terraform {
+  backend "s3" {
+    bucket         = "aws-ecs-terraform"
+    key            = "tfstate/aws-ecs-terraform/app.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    dynamodb_table = "aws-ecs-terraform-locking-ue1"
+  }
+}
+```
 ## Creating Infrastructure using Terraform.
  * Clone this Repository
     ```git clone <repo>```
