@@ -26,7 +26,7 @@ Here we use modules to create all AWS service so later while creating multiple e
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.15.1 |
 
 ### Pre-requisites.
-1)  Create a docker image and store it in ECR (Amazon Elastic Container Registry). Ensure you use same region where you are going to run ECS Cluster and update ARN in terraform variables.
+1)  Create a docker image and store it in ECR (Amazon Elastic Container Registry). Ensure you use same region where you are going to run ECS Cluster and update ARN in terraform variables file.
 
 2) Access to endpoint is over HTTPS its recommended to create a valid certificate. in this scenario i have used self-signed certificate and steps are given below.
 #### Upload self-signed certificate incase if you do not have certificate
@@ -36,7 +36,7 @@ openssl rsa -in privateKey.key -text > private.pem
 openssl x509 -inform PEM -in certificate.crt > public.pem
 aws iam upload-server-certificate --server-certificate-name <certname> --certificate-body file://public.pem --private-key file://private.pem —region us-east-1
 ```
-Update this ARN In terraform.
+Update this ARN In terraform variables file.
 
 Using self-signed certificate has some drawbacks while accessing it over browser. using curl with -k option can help over come this issue.
 ### Terraform statefile.
