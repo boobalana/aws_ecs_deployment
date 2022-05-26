@@ -67,4 +67,4 @@ terraform {
     ```terraform apply (confirm with yes)```
 
 Terraform will provide Load balance endpoint as output which can be used to access the deployed image.
-* curl -x https://<ALB>/index.html        
+ ```curl -x https://<ALB>/index.html```     
