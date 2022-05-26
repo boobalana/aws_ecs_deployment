@@ -1,5 +1,4 @@
 # AWS ECS with terraform
-aws_ecs_deployment with terraform
 
 Using this Repository we can create ECS Cluster using terraform.
 
@@ -29,7 +28,7 @@ Here we use modules to create all AWS service so later while creating multiple e
 ### Pre-requisites.
 1)  Create a docker image and store it in ECR (Amazon Elastic Container Registry). Ensure you use same region where you are going to run ECS Cluster and update ARN in terraform variables.
 
-2)  Access to endpoint is over HTTPS its recommended to create a valid certificate. in this scenario i have used self-signed certificate and steps are given below.
+2) Access to endpoint is over HTTPS its recommended to create a valid certificate. in this scenario i have used self-signed certificate and steps are given below.
 #### Upload self-signed certificate incase if you do not have certificate
 ```
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt
